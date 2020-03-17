@@ -1,4 +1,9 @@
 <p>servers works!</p>
 <button [disabled]="allowNewServer">property bind</button>
+<button (click)='onCreateServer()'>CreateServer</button>
+<input (input)='onUpdateServer($event)'/>
+<input [(ngModel)]='serverName'/>
+{{serverCreationStatus}}
+{{serverName}}
 <app-server></app-server>
 <app-server></app-server>
