@@ -1,35 +1,42 @@
 # Knowledges of Angular
 
 ## CMD Code:  
-1. Environment
+### Environment
     node -v  
     npm -v  
-2. Angular CLI
+    
+### Angular CLI
     npm install -g @angular/cli  
     ng -v  
-3. Create Project 
+    
+### Create Project 
     ng new xxProject  
-4. Run project  
+    
+### Run project  
     cd xxProject  
     ng serve --port:8888  
-5. Bootstrap  
+    
+### Bootstrap  
     1) npm install bootstrap --save (=npm i bootstrap -S)  
-    *change angular.json>styles & app.component.html
-    OR:
-    2) use Bootstrap CDN
-    *change app.component.html
-6. Create component  
+    *change angular.json>styles & app.component.html  
+    OR:  
+    2) use Bootstrap CDN  
+    *change app.component.html  
+    
+### Create component  
     ng generate component xxComponent (=ng g c xxComponent)  
     *not generate test file by using '--spec false'  
-7. Split project  
+    
+### Split project  
     ng g c xxFunctionoperate  
     *not generate test file by using '--spec false'  
     ng g c xxDatashow  
     *not generate test file by using '--spec false'  
-8. Create Directives  
+    
+### Create Directives  
     ng generate directive xxDirective (=ng g d xxDirective)  
     *not generate test file by using '--spec false'  
-    *change ngOnInit() & Constructor() > parameters & tags <p appxxx></p>
+    *change ngOnInit() & Constructor() > parameters & tags <p appxxx></p>  
 
 ## Concepts
 ### Structure:  
@@ -60,11 +67,11 @@
 
 ## Data Transmission  
 ### Template Binding:  
-1. Common:  
+#### Common:  
     {{ xx }} / {{ getXX() }} / {{ 'xx' }}  
     *use mainly by string  
 
-2. Property Binding(parent->child):  
+#### Property Binding(parent->child):  
     [xx]='xxvalue'  
     *use mainly by judge/bool/composition/string/other  
     Self-defined property binding:  
@@ -72,7 +79,7 @@
         parent: yy=[]  
         <app-yy [xxalias]=yy>  
 
-3. Event Binding(child->parent):  
+#### Event Binding(child->parent):  
     (click)="onCreateServer()"  
     (input)="onUpdateServer($event)"  
     Self-defined event binding:  
@@ -83,18 +90,19 @@
         parent: <app-yy (xxalias)="onSthdo($event)">  
                 onSthdo(xxData:{aa:string,bb:string}){this.xxElement.push({type:'xx',name:xxData.aa})}  
 
-4. Two ways Binding:  
+#### Two ways Binding:  
     [(ngModel)]="ServerName"  
 
 ### Directive (Structural/Attribute):  
-1. *ngFor  
+#### *ngFor  
     <p *ngFor="let x of xx;let i=index" >  
         {{x.attr1}}  
     </p>  
     OR  
     <ng-template ngFor let-xx [ngForOf]="xxxx">  
     </ng-template>  
-2. *ngIf  
+    
+#### *ngIf  
     <p *ngIf="xx;else yy"></p>  
     <ng-template #yy>  
     OR  
@@ -105,8 +113,9 @@
     </div>  
     OR  
     <ng-template [ngIf]="!yy">
-    </ng-template>
-3. ngSwitch  
+    </ng-template>  
+    
+#### ngSwitch  
     value=10;  
     <div [ngSwitch]="value">  
         <p *ngSwitchCase="5">555</p>  
@@ -114,15 +123,17 @@
         <p *ngSwitchDefault>default</p>  
     </div>  
     
-4. [ngStyle]  
+#### [ngStyle]  
     <p [ngStyle]="{color:getColor()}"></p>  
     <p [ngStyle]="{color:aa%2!==0?'red':'blue'}">  
-5. [ngClass]  
+    
+#### [ngClass]  
     <p [ngClass]="{xxClass:aa%2!==0}"></p>  
-6. Self-defined Attribute Directive:  
+    
+#### Self-defined Attribute Directive:  
     Details see: **Create Directives** above  
 
-7. Self-defined Structural Directive:  
+#### Self-defined Structural Directive:  
     @input() set xx(condition:boolean){  
         if(!condition){  
             this.vr.createEmbeddedView(this.tr);  
@@ -133,13 +144,13 @@
     constructor(private tr:TemplateRef<any>,private vr:ViewContentRef){}  
     <div *xx="xxCondition"></div>  
 
-8. Directive Listener:
+#### Directive Listener:
     @HostListener('xxevent') xxevent()  
     
-9. Data Binding:
+#### Data Binding:
     @HostBinding('style.xx') xx:string='xxvalue'  
 
-10. Property Binding:  
+#### Property Binding:  
     @input() defaultColor:string="blue";  
     @input() highlightColor:string="red";  
     @HostBinding('style.backgroundColor') backgroundColor:string;  
