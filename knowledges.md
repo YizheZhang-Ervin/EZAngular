@@ -29,7 +29,7 @@
 8. Create Directives  
     ng generate directive xxDirective (=ng g d xxDirective)  
     *not generate test file by using '--spec false'  
-    *change ngOnInit() & Constructor()
+    *change ngOnInit() & Constructor() > parameters & tags <p appxxx></p>
 
 ## Concepts
 ### Structure:  
@@ -77,7 +77,11 @@
     (input)="onUpdateServer($event)"  
     Self-defined event binding:  
         child: @output('xxalias') xx=new EventEmitter<{aa:string,bb:string}>();  
-        parent: <app-yy (xxalias)="ondosth($event)">  
+               onDosth(){  
+                   this.xx.emit({aa:this.a,bb:this.b;})  
+               }  
+        parent: <app-yy (xxalias)="onSthdo($event)">  
+                onSthdo(xxData:{aa:string,bb:string}){this.xxElement.push({type:'xx',name:xxData.aa})}  
 
 4. Two ways Binding:  
     [(ngModel)]="ServerName"  
@@ -87,6 +91,9 @@
     <p *ngFor="let x of xx;let i=index" >  
         {{x.attr1}}  
     </p>  
+    OR  
+    <ng-template ngFor let-xx [ngForOf]="xxxx">  
+    </ng-template>  
 2. *ngIf  
     <p *ngIf="xx;else yy"></p>  
     <ng-template #yy>  
@@ -96,26 +103,57 @@
             {{ b }}  
         </li>  
     </div>  
-3. [ngStyle]  
+    OR  
+    <ng-template [ngIf]="!yy">
+    </ng-template>
+3. ngSwitch  
+    value=10;  
+    <div [ngSwitch]="value">  
+        <p *ngSwitchCase="5">555</p>  
+        <p *ngSwitchCase="10">1010101</p>  
+        <p *ngSwitchDefault>default</p>  
+    </div>  
+    
+4. [ngStyle]  
     <p [ngStyle]="{color:getColor()}"></p>  
     <p [ngStyle]="{color:aa%2!==0?'red':'blue'}">  
-4. [ngClass]  
+5. [ngClass]  
     <p [ngClass]="{xxClass:aa%2!==0}"></p>  
-5. Self-defined Directive:
+6. Self-defined Attribute Directive:  
+    Details see: **Create Directives** above  
 
-6. Directive Listener:
+7. Self-defined Structural Directive:  
+    @input() set xx(condition:boolean){  
+        if(!condition){  
+            this.vr.createEmbeddedView(this.tr);  
+        }else{  
+            this.vr.clear();  
+        }  
+    }  
+    constructor(private tr:TemplateRef<any>,private vr:ViewContentRef){}  
+    <div *xx="xxCondition"></div>  
+
+8. Directive Listener:
     @HostListener('xxevent') xxevent()  
     
-7. Data Binding:
+9. Data Binding:
     @HostBinding('style.xx') xx:string='xxvalue'  
 
-8. Property Binding:  
-    @input defaultColor:string="blue";  
-    @input highlightColor:string="red";  
+10. Property Binding:  
+    @input() defaultColor:string="blue";  
+    @input() highlightColor:string="red";  
+    @HostBinding('style.backgroundColor') backgroundColor:string;  
+    @HostListener(){this.backgroundColor=this.defaultColor;}  
+    <p appxx [highlightcolor]="'red'" [defaultColor]="'blue'">..</p>  
+    OR  
+    @input() defaultColor:string="blue";  
+    @input('appxx') highlightColor:string="red";  
     @HostBinding('style.backgroundColor') backgroundColor:string;  
     @HostListener(){this.backgroundColor=this.defaultColor;}  
     <p [appxx]="'red'" [defaultColor]="'blue'">..</p>  
-    
+    OR  
+    <p appxx="red" defaultColor="blue">..</p> 
+
 ### ViewChild  
     @ViewChild('input001') input001:ElementRef  
     ondosth(){  
@@ -123,5 +161,18 @@
     }  
   
 ## ContentChild
+    <p #content></p>  
+    @contentchild('content') ct:ElementRef;  
+    OnInit(){  
+        console.log(this.ct.nativeElement.textContent);  
+    }  
 
 ## ng-content
+    Parent:  
+    <app-xx-element *ngFor>  
+        <p *ngIf>  
+            {{xxElement.content}}  
+        </p>  
+    </app-xx-element>  
+    Child:  
+    <ng-content><ng-content>  
